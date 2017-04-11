@@ -1,20 +1,32 @@
 import sys, os, math
 from collections import Counter
 
+"""
+Compile:
+# Define automata that maps word -> concept
+python word2concept.py data/merged.txt word2concept.machine
+
+where data/merged.txt is the merge between the two training files
+
+# Compile automatas
+fstcompile --isymbols=lexicon --osymbols=lexicon word2concept.machine > word2concept.fst
+"""
+
 train = sys.argv[1]
 output = sys.argv[2]
-lemmaposconcept_strings = []
+wc = []
 
 def removeDuplicate(l):
     return list(set(l))
 
 def createAutomata(wordlemma, concept_costs):
     with open(output, 'w') as f:
-        for lemma, concept, cost in wordlemma:
-            f.write("0\t0\t" + lemma + "\t" + concept + "\t" + str(cost) +"\n")
+        for word, concept, cost in wordlemma:
+            f.write("0\t0\t" + word + "\t" + concept + "\t" + str(cost) +"\n")
         for cocost in concept_costs:
-            concept, cost = cocost       
-            f.write("0\t0\t<unk>\t" + concept + "\t" + str(cost) +"\n")
+            concept, cost = cocost
+            f.write("0\t0\t<unk>\t" + concept + "\t0\n")
+            #f.write("0\t0\t<unk>\t" + concept + "\t" + str(cost) +"\n")
         f.write('0')
     
 # read file
@@ -32,7 +44,7 @@ lines = text1.split("\n")
 for line in lines:
     if not line.strip(): continue
     word, tag, lemma, concept = tuple(line.split("\t"))
-    lemmaposconcept_strings.append(lemma + "\t" + tag + "\t" + concept)
+    wc.append(word + "\t" + concept)
     words.append(word)
     poss.append(tag)
     lemmas.append(lemma)
@@ -40,22 +52,22 @@ for line in lines:
     
 
 # get weight
-# p(tag | lemma) = c(tag, lemma) / c(lemma)
-counter_lemmaposconcept = Counter(lemmaposconcept_strings).most_common()
+# p(tag | lemma) = c(word, tag, concept) / c(concept)
+counter_wc = Counter(wc).most_common()
 counter_lemmas = dict(Counter(lemmas))
 counter_poss = dict(Counter(poss))
 counter_words = dict(Counter(words))
 counter_concepts = dict(Counter(concepts))
 
 wordlemma = []
-for wl in counter_lemmaposconcept:
-    lemma_tag_concepts, count = wl
-    lemma, tag, concept = tuple(lemma_tag_concepts.split("\t"))
-    count_concepts = counter_concepts[concept]
-    prob = float(count) / float(count_concepts)
+for wl in counter_wc:
+    word_concept, count = wl
+    word, concept = tuple(word_concept.split("\t"))
+    count_concept = counter_concepts[concept]
+    prob = float(count) / float(count_concept)
     cost = - math.log(prob)
     cost = abs(cost)
-    wordlemma.append((lemma, concept, cost))
+    wordlemma.append((word, concept, cost))
 
 # p(concept) = p(concept) / p (total_concepts)
 concept_prob = []
