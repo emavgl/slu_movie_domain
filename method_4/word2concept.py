@@ -14,7 +14,7 @@ fstcompile --isymbols=lexicon --osymbols=lexicon word2concept.machine > word2con
 
 train = sys.argv[1]
 output = sys.argv[2]
-wtlc = []
+wc = []
 
 def removeDuplicate(l):
     return list(set(l))
@@ -25,8 +25,8 @@ def createAutomata(wordlemma, concept_costs):
             f.write("0\t0\t" + word + "\t" + concept + "\t" + str(cost) +"\n")
         for cocost in concept_costs:
             concept, cost = cocost
-#            f.write("0\t0\t<unk>\t" + concept + "\t" + str(cost) +"\n")
             f.write("0\t0\t<unk>\t" + concept + "\t0\n")
+            #f.write("0\t0\t<unk>\t" + concept + "\t" + str(cost) +"\n")
         f.write('0')
     
 # read file
@@ -44,7 +44,7 @@ lines = text1.split("\n")
 for line in lines:
     if not line.strip(): continue
     word, tag, lemma, concept = tuple(line.split("\t"))
-    wtlc.append(word + "\t" + tag + "\t" + lemma + "\t" +concept)
+    wc.append(word + "\t" + concept)
     words.append(word)
     poss.append(tag)
     lemmas.append(lemma)
@@ -52,17 +52,17 @@ for line in lines:
     
 
 # get weight
-# p(tag | lemma) = c(word, tag, concept) / c(concept)
-counter_wtlc = Counter(wtlc).most_common()
+# p(word | concept) = c(word, concept) / c(concept)
+counter_wc = Counter(wc).most_common()
 counter_lemmas = dict(Counter(lemmas))
 counter_poss = dict(Counter(poss))
 counter_words = dict(Counter(words))
 counter_concepts = dict(Counter(concepts))
 
 wordlemma = []
-for wl in counter_wtlc:
-    word_tag_lemma_concept, count = wl
-    word, tag, lemma, concept = tuple(word_tag_lemma_concept.split("\t"))
+for wl in counter_wc:
+    word_concept, count = wl
+    word, concept = tuple(word_concept.split("\t"))
     count_concept = counter_concepts[concept]
     prob = float(count) / float(count_concept)
     cost = - math.log(prob)

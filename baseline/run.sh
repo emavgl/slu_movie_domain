@@ -16,20 +16,17 @@ farcompilestrings --symbols=lexicon --unknown_symbol='<unk>' -keep_symbols=1 dat
 # Compile all test sentences
 farcompilestrings --unknown_symbol='<unk>' --symbols=lexicon -keep_symbols=1 data/sentences.txt > word_sentences.far
 
-# Create Language Model
-ngramcount --order=5 --require_symbols=false concepts.far > concepts.cnts
-
-ngrammake --method=absolute concepts.cnts > trlm.lm
-
 # Delete old tmp files
-rm -rf stats; mkdir stats;
-rm results.txt; rm -rf fst ; mkdir fst; cd fst; farextract --filename_suffix=.fst ../word_sentences.far; cd ..;
+rm -rf stats; rm results.txt; rm -rf fst ;
+mkdir stats; mkdir fst; cd fst; 
+
+farextract --filename_suffix=.fst ../word_sentences.far; cd ..;
 
 # For each strings, process and put results into results.txt
 for f in ./fst/*
 do
-    echo "Processing $f file using 5-gram and absolute"
-    fstcompose $f word2concept_s.fst | fstcompose - trlm.lm | fstrmepsilon | fstshortestpath | fsttopsort | fstprint --isymbols=lexicon --osymbols=lexicon  >> results.txt;
+    echo "Processing $f file"
+    fstcompose $f word2concept_s.fst | fstrmepsilon | fstshortestpath | fsttopsort | fstprint --isymbols=lexicon --osymbols=lexicon  >> results.txt;
 done
 
 # Get processed concepts and prepare to_evaluate file

@@ -20,7 +20,8 @@ fstarcsort lemma2concept.fst > lemma2concept_s.fst
 fstcompose w2lemma_s.fst lemma2concept_s.fst > w2concept.fst
 
 ## declare an array variable
-declare -a ngrams=("1" "2" "3" "4", "5")
+#declare -a ngrams=("1" "2" "3" "4" "5")
+declare -a ngrams=("4" "5")
 declare -a methods=("witten_bell" "absolute" "katz" "kneser_ney" "presmoothed" "unsmoothed")
 
 # Compile all training concepts
@@ -28,6 +29,9 @@ farcompilestrings --symbols=lexicon --unknown_symbol='<unk>' -keep_symbols=1 dat
 
 # Compile all test sentences
 farcompilestrings --unknown_symbol='<unk>' --symbols=lexicon -keep_symbols=1 data/sentences.txt > word_sentences.far
+
+# Remove stats directory
+rm -rf stats; mkdir stats;
 
 ## now loop through the above array
 for i in "${ngrams[@]}"
@@ -53,6 +57,6 @@ do
         awk '{print $4}' results.txt | paste -d '\t' data/NLSPARQL.test.data - | sed 's/\t/ /g' > to_evaluate.txt
 
         # Evaluate using conlleval
-        perl conlleval.pl < to_evaluate.txt >> stat_$i.txt
+        perl conlleval.pl < to_evaluate.txt >> ./stats/stat_$i.txt
     done
 done

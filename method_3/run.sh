@@ -1,5 +1,5 @@
 # Create lexicon
-python createLexicon.py data/train1.txt data/train2.txt
+python createLexicon.py data/train1.txt data/train2_p.txt
 
 # Define automata that maps word -> concept
 python word2concept.py data/merged.txt word2concept.machine
@@ -11,7 +11,7 @@ fstcompile --isymbols=lexicon --osymbols=lexicon word2concept.machine > word2con
 fstarcsort word2concept.fst > word2concept_s.fst
 
 ## declare an array variable
-declare -a ngrams=("1" "2" "3" "4", "5")
+declare -a ngrams=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10")
 declare -a methods=("witten_bell" "absolute" "katz" "kneser_ney" "presmoothed" "unsmoothed")
 
 # Compile all training concepts
@@ -19,6 +19,9 @@ farcompilestrings --symbols=lexicon --unknown_symbol='<unk>' -keep_symbols=1 dat
 
 # Compile all test sentences
 farcompilestrings --unknown_symbol='<unk>' --symbols=lexicon -keep_symbols=1 data/sentences.txt > word_sentences.far
+
+# Delete stats directory
+rm -rf stats; mkdir stats;
 
 ## now loop through the above array
 for i in "${ngrams[@]}"
@@ -41,9 +44,9 @@ do
         done
 
         # Get processed concepts and prepare to_evaluate file
-        awk '{print $4}' results.txt | paste -d '\t' data/NLSPARQL.test.data - | sed 's/\t/ /g' > to_evaluate.txt
+        awk '{print $4}' results.txt | paste -d '\t' data/NLSPARQL.test.data - | sed 's/\t/ /g' | sed -r 's/(O-(.)*)/O/' > to_evaluate.txt
 
         # Evaluate using conlleval
-        perl conlleval.pl < to_evaluate.txt >> stat_$i.txt
+        perl conlleval.pl < to_evaluate.txt >> ./stats/stat_$i.txt
     done
 done

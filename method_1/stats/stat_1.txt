@@ -22,6 +22,7 @@ movie.star_rating: precision:   0.00%; recall:   0.00%; FB1:   0.00  0
       person.name: precision:   2.63%; recall:   2.94%; FB1:   2.78  38
     producer.name: precision:  60.00%; recall:  61.64%; FB1:  60.81  75
       rating.name: precision:  82.81%; recall:  86.89%; FB1:  84.80  64
+
 processed 7117 tokens with 1091 phrases; found: 1227 phrases; correct: 600.
 accuracy:  87.96%; precision:  48.90%; recall:  55.00%; FB1:  51.77
        actor.name: precision:  48.84%; recall:  52.50%; FB1:  50.60  86
@@ -46,6 +47,7 @@ movie.star_rating: precision:   0.00%; recall:   0.00%; FB1:   0.00  0
       person.name: precision:   2.63%; recall:   2.94%; FB1:   2.78  38
     producer.name: precision:  60.00%; recall:  61.64%; FB1:  60.81  75
       rating.name: precision:  82.81%; recall:  86.89%; FB1:  84.80  64
+
 processed 7117 tokens with 1091 phrases; found: 1227 phrases; correct: 600.
 accuracy:  87.96%; precision:  48.90%; recall:  55.00%; FB1:  51.77
        actor.name: precision:  48.84%; recall:  52.50%; FB1:  50.60  86
@@ -70,6 +72,7 @@ movie.star_rating: precision:   0.00%; recall:   0.00%; FB1:   0.00  0
       person.name: precision:   2.63%; recall:   2.94%; FB1:   2.78  38
     producer.name: precision:  60.00%; recall:  61.64%; FB1:  60.81  75
       rating.name: precision:  82.81%; recall:  86.89%; FB1:  84.80  64
+
 processed 7117 tokens with 1091 phrases; found: 1227 phrases; correct: 600.
 accuracy:  87.96%; precision:  48.90%; recall:  55.00%; FB1:  51.77
        actor.name: precision:  48.84%; recall:  52.50%; FB1:  50.60  86
@@ -94,6 +97,7 @@ movie.star_rating: precision:   0.00%; recall:   0.00%; FB1:   0.00  0
       person.name: precision:   2.63%; recall:   2.94%; FB1:   2.78  38
     producer.name: precision:  60.00%; recall:  61.64%; FB1:  60.81  75
       rating.name: precision:  82.81%; recall:  86.89%; FB1:  84.80  64
+
 processed 7117 tokens with 1091 phrases; found: 1227 phrases; correct: 600.
 accuracy:  87.96%; precision:  48.90%; recall:  55.00%; FB1:  51.77
        actor.name: precision:  48.84%; recall:  52.50%; FB1:  50.60  86
@@ -118,6 +122,7 @@ movie.star_rating: precision:   0.00%; recall:   0.00%; FB1:   0.00  0
       person.name: precision:   2.63%; recall:   2.94%; FB1:   2.78  38
     producer.name: precision:  60.00%; recall:  61.64%; FB1:  60.81  75
       rating.name: precision:  82.81%; recall:  86.89%; FB1:  84.80  64
+
 processed 7117 tokens with 1091 phrases; found: 1227 phrases; correct: 600.
 accuracy:  87.96%; precision:  48.90%; recall:  55.00%; FB1:  51.77
        actor.name: precision:  48.84%; recall:  52.50%; FB1:  50.60  86
