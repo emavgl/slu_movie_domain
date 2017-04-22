@@ -11,10 +11,8 @@ fstcompile --isymbols=lexicon --osymbols=lexicon word2concept.machine > word2con
 fstarcsort word2concept.fst > word2concept_s.fst
 
 ## declare an array variable
-#declare -a ngrams=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10")
-declare -a ngrams=("7" "8" "9" "10")
-#declare -a methods=("witten_bell" "absolute" "katz" "kneser_ney" "presmoothed" "unsmoothed")
-declare -a methods=("presmoothed" "unsmoothed")
+declare -a ngrams=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10")
+declare -a methods=("witten_bell" "absolute" "katz" "kneser_ney" "presmoothed" "unsmoothed")
 
 # Compile all training concepts
 farcompilestrings --symbols=lexicon --unknown_symbol='<unk>' -keep_symbols=1 data/concepts.txt > concepts.far
