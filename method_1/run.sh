@@ -20,8 +20,7 @@ fstarcsort lemma2concept.fst > lemma2concept_s.fst
 fstcompose w2lemma_s.fst lemma2concept_s.fst > w2concept.fst
 
 ## declare an array variable
-#declare -a ngrams=("1" "2" "3" "4" "5")
-declare -a ngrams=("4" "5")
+declare -a ngrams=("1" "2" "3" "4" "5")
 declare -a methods=("witten_bell" "absolute" "katz" "kneser_ney" "presmoothed" "unsmoothed")
 
 # Compile all training concepts
