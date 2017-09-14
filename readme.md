@@ -1,6 +1,15 @@
-Directories represent different methods.
+# Mid-Term Project: FST and GRM Tools for SLU
 
-### To run:
+## Report Abstract
+This report investigates several configurations in developing a Generative Spoken Language Understanding Module (SLU)
+given a dataset of conceptually-tagged utterances. The aim of the investigation is to compare results obtained with different
+methods and parameter congurations in order to find which one performs better when evaluated over a given test set. From our
+investigation, the best result in terms of Precision, Recall and F1 score is obtained by pre-processing the training set and us-
+ing a composition between word2lemma FST and a language model with 9-gram and Kneser Ney smoothing algorithm.
+
+For more information, please read the file *report.pdf*.
+
+## How to run:
 Each directory has a bash script called *run.sh* that executes all the
 possible combination of n-grams and smoothing algorithm for that specific method.
 method_1, method_2 and method_3 have also a run_best.sh script to executes the combination that gives the best F1 score.
